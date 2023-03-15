@@ -3,6 +3,7 @@ import "./App.css";
 import lens from "./assets/lens.png";
 import loadingGif from "./assets/loading.gif";
 
+
 function App() {
   const [prompt, updatePrompt] = useState(undefined);
   const [loading, setLoading] = useState(false);
@@ -45,19 +46,22 @@ function App() {
 
   return (
     <div className="app">
+      <h1 className="h1">Hi, I'm the AI Tutor</h1>
+      <h2 className="h2">Ask me anything!</h2>
       <div className="app-container">
-        <div className="spotlight__wrapper">
           <input
             type="text"
             className="spotlight__input"
-            placeholder="Ask me anything..."
+            placeholder="What do you want to know?"
             disabled={loading}
             style={{
               backgroundImage: loading ? `url(${loadingGif})` : `url(${lens})`,
             }}
             onChange={(e) => updatePrompt(e.target.value)}
             onKeyDown={(e) => sendPrompt(e)}
-          />
+            />
+            <text className="text">Press enter to submit your question to our AI Tutor</text>
+        <div className="spotlight__wrapper">
           <div className="spotlight__answer">{answer && <p>{answer}</p>}</div>
         </div>
       </div>
