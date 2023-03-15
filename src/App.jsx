@@ -47,7 +47,7 @@ function App() {
   return (
     <div className="app">
       <h1 className="h1">Hi, I'm the AI Tutor</h1>
-      <h2 className="h2">Ask me anything!</h2>
+      <h2 className="h2">Ask me anything.</h2>
       <div className="app-container">
           <input
             type="text"
