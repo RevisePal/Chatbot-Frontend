@@ -1,5 +1,13 @@
+@font-face {
+  font-family: 'San Francisco';
+  src: url('/src/assets/SF-Pro-Display-Regular.otf') format('opentype');
+}
+
+body {
+  font-family: 'San Francisco', sans-serif;}
+
 .app {
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,7 +15,7 @@
   background-image: linear-gradient(#0E64C1, #2796E6);
   padding-top: 40px;
   text-align: center;
-
+overflow: auto
 };
 
 .app-container {
@@ -19,32 +27,49 @@
 .spotlight__input {
   display: flex;
   flex-direction: row;
-  width: 70%;
-  border-radius: 10px;
   color: #000;
-  background-position: left 17px center;
-  background-repeat: no-repeat;
-  background-color: #fff;
-  background-size: 3.5%;
   font-size: 16px;
-  padding-left: 60px;
+  padding-left: 15px;
   padding-top: 15px;
   padding-bottom: 15px;
-  margin-bottom: 10px;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: hidden;
+  width: 290px;
+  border-radius: 5px;
+  font-family: 'San Francisco', sans-serif;
+}
+
+.image {
+  padding-left: 300px;
+  /* margin-top: -100px; */
+}
+
+.enter {
+  height: 30px;
+  width: 30px;
 }
 
 .spotlight__answer {
   min-height: 115px;
   padding: 10px 30px;
-  width:70%;
+  width:75%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 5px;
   border-color: black;
   border-width: 2px;
-  margin-bottom: 40px;
+  margin-bottom: 5px;
+  margin-top: 20px;
+  background-position: left 17px center;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  background-size: 5%;
+  font-family: 'San Francisco', sans-serif;
+
 }
 .spotlight__input::placeholder {
   line-height: 1.5em;
@@ -52,14 +77,25 @@
 
 .h3 {
   color: white;
+  font-weight: 300;
+  font-size: 0.8em;
+  width: 85%;
+  text-align: left;
+  font-family: 'San Francisco', sans-serif;
 }
 
 .h1 {
   color: white;
+  margin-bottom: 0px;
+  font-family: 'San Francisco', sans-serif;
 }
 
 .h2 {
   color: white;
+  font-weight: 300;
+  font-size: 1em;
+  margin-bottom: 20px;
+  font-family: 'San Francisco', sans-serif;
 }
 
 

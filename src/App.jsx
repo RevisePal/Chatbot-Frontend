@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import "./App.css";
 import lens from "./assets/lens.png";
+import send from "./assets/send.png";
 import robot from "./assets/robot.png";
 import loadingGif from "./assets/loading.gif";
 import { url } from './utils/utils';
@@ -46,25 +47,39 @@ function App() {
       setLoading(false);
     }
   };
+  const handleIconClick = () => {
+    if (!loading) {
+      sendPrompt({ key: "Enter" });
+    }
+  };
 
   return (
     <div className="app">
       <h1 className="h1">Welcome to TutorGPT</h1>
-      <h2 className="h2">Ask me anything!</h2>
+        <text className="h2">Powered by GPT-3</text>
+      <div style={{backgroundColor: "white", display:'flex', flexDirection: 'row', justifyContent: 'space-between' , alignItems: 'center', width: '90%', borderRadius: '5px'}}>
       <input
           type="text"
           className="spotlight__input"
           placeholder="What do you want to know?"
           disabled={loading}
-          style={{
-          backgroundImage: loading ? `url(${loadingGif})` : `url(${lens})`,
-          }}
+          
           onChange={(e) => updatePrompt(e.target.value)}
           onKeyDown={(e) => sendPrompt(e)}
       />
-          <h3 className="h3">Press enter to submit your question to our AI Tutor</h3>
-        <div className="spotlight__answer">{answer && <p>{answer}</p>}</div>
-        <img src={robot} alt="loading" />
+      <img
+          className="enter"
+          src={send}
+          alt="search icon"
+          onClick={handleIconClick}
+          style={{width: 20, height: 20, cursor: "pointer", marginRight: 15}}
+        />
+        </div>
+        <div style={{
+          backgroundImage: loading ? `url(${loadingGif})` : ``,
+          }} className="spotlight__answer">{answer && <p>{answer}</p>}</div>
+        <text className="h3">The first response may take up to 7 seconds to load, but after that it will be instant!</text>
+        <img className='image' src={robot} alt="loading" />
       </div>
   );
 }
