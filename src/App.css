@@ -5,55 +5,52 @@
   align-items: center;
   justify-content: flex-start;
   background-image: linear-gradient(#0E64C1, #2796E6);
-  padding-top: 40px
+  padding-top: 40px;
+  text-align: center;
+
 };
 
 .app-container {
-  width: 81%;
-  max-width: 80%;
-  padding-left: 20px;
-  padding-right: 20px;
   text-align: center;
-  border: 2px solid #000;
-}
-
-.spotlight__wrapper {
-  border-radius: 15px;
-  border: 2px solid #000;
-  margin: auto;
-  max-width: 500px;
-  background-color: #fff;
-  margin-top: 10px;
-}
-
-.spotlight__wrapper:hover,
-.spotlight__wrapper:focus {
-  background-color: #fff;
-  /* box-shadow: 0 1px 6px rgb(32 33 36 / 28%); */
+  justify-content: center;
+  align-items: center;
 }
 
 .spotlight__input {
-  display: block;
-  height: 56px;
-  width: 80%;
-  border: 2;
-  /* border-color: black; */
-  border-radius: 12px;
-  font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  border-radius: 10px;
   color: #000;
   background-position: left 17px center;
   background-repeat: no-repeat;
   background-color: #fff;
   background-size: 3.5%;
+  font-size: 16px;
   padding-left: 60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   margin-bottom: 10px;
 }
 
+.spotlight__answer {
+  min-height: 115px;
+  padding: 10px 30px;
+  width:70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+  border-color: black;
+  border-width: 2px;
+  margin-bottom: 40px;
+}
 .spotlight__input::placeholder {
   line-height: 1.5em;
 }
 
-.text {
+.h3 {
   color: white;
 }
 
@@ -65,27 +62,6 @@
   color: white;
 }
 
-.spotlight__answer {
-  min-height: 115px;
-  line-height: 1.5em;
-  letter-spacing: 0.1px;
-  padding: 10px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spotlight__answer p::after {
-  content: "";
-  width: 2px;
-  height: 14px;
-  position: relative;
-  top: 2px;
-  left: 2px;
-  background: black;
-  display: inline-block;
-  animation: cursor-blink 1s steps(2) infinite;
-}
 
 @keyframes cursor-blink {
   0% {

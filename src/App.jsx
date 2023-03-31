@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import "./App.css";
 import lens from "./assets/lens.png";
+import robot from "./assets/robot.png";
 import loadingGif from "./assets/loading.gif";
 import { url } from './utils/utils';
 
@@ -48,26 +49,23 @@ function App() {
 
   return (
     <div className="app">
-      <h1 className="h1">Hi, I'm the AI Tutor</h1>
+      <h1 className="h1">Welcome to TutorGPT</h1>
       <h2 className="h2">Ask me anything!</h2>
-      <div className="app-container">
-          <input
-            type="text"
-            className="spotlight__input"
-            placeholder="What do you want to know?"
-            disabled={loading}
-            style={{
-              backgroundImage: loading ? `url(${loadingGif})` : `url(${lens})`,
-            }}
-            onChange={(e) => updatePrompt(e.target.value)}
-            onKeyDown={(e) => sendPrompt(e)}
-            />
-            <text className="text">Press enter to submit your question to our AI Tutor</text>
-        <div className="spotlight__wrapper">
-          <div className="spotlight__answer">{answer && <p>{answer}</p>}</div>
-        </div>
+      <input
+          type="text"
+          className="spotlight__input"
+          placeholder="What do you want to know?"
+          disabled={loading}
+          style={{
+          backgroundImage: loading ? `url(${loadingGif})` : `url(${lens})`,
+          }}
+          onChange={(e) => updatePrompt(e.target.value)}
+          onKeyDown={(e) => sendPrompt(e)}
+      />
+          <h3 className="h3">Press enter to submit your question to our AI Tutor</h3>
+        <div className="spotlight__answer">{answer && <p>{answer}</p>}</div>
+        <img src={robot} alt="loading" />
       </div>
-    </div>
   );
 }
 
