@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://joshkiddl.github.io/AI-Bot-Frontend/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import lens from "./assets/lens.png";
 import loadingGif from "./assets/loading.gif";
+import { url } from './utils/utils';
 
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
         body: JSON.stringify({ prompt }),
       };
 
-      const res = await fetch("/api/ask", requestOptions);
+      const res = await fetch(`${url}/ask`, requestOptions);
 
       if (!res.ok) {
         throw new Error("Something went wrong");
