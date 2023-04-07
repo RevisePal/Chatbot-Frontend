@@ -56,7 +56,7 @@ function App() {
   return (
     <div className="app">
       <h1 className="h1">Welcome to TutorGPT</h1>
-        <text className="h2">Powered by GPT-3</text>
+        <h2 className="h2">Powered by GPT-3</h2>
       <div style={{backgroundColor: "white", display:'flex', flexDirection: 'row', justifyContent: 'space-between' , alignItems: 'center', width: '90%', borderRadius: '5px'}}>
       <input
           type="text"
@@ -78,7 +78,7 @@ function App() {
         <div style={{
           backgroundImage: loading ? `url(${loadingGif})` : ``,
           }} className="spotlight__answer">{answer && <p>{answer}</p>}</div>
-        <text className="h3">The first response may take up to 7 seconds to load, but after that it will be instant!</text>
+        <h4 className="h3">The first response may take up to 10 seconds to load, but after that it will be instant!</h4>
         <img className='image' src={robot} alt="loading" />
       </div>
   );

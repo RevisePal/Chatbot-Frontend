@@ -52,7 +52,8 @@ overflow: auto
 }
 
 .spotlight__answer {
-  min-height: 115px;
+  min-height: 100px;
+  height: auto;
   padding: 10px 30px;
   width:75%;
   display: flex;
