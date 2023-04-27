@@ -78,7 +78,7 @@ function App() {
         <div style={{
           backgroundImage: loading ? `url(${loadingGif})` : ``,
           }} className="spotlight__answer">{answer && <p>{answer}</p>}</div>
-        <h4 className="h3">The first response may take up to 10 seconds to load, but after that it will be instant!</h4>
+        <h4 className="h3">*ChatGPT may produce inaccurate information about people, places, or facts.</h4>
         <img className='image' src={robot} alt="loading" />
       </div>
   );
