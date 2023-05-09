@@ -14,6 +14,15 @@ function App() {
   const [answer, setAnswer] = useState(undefined);
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const question = urlParams.get('question');
+    updatePrompt(question)
+
+  }, [])
+
+  console.log(prompt)
+
+  useEffect(() => {
     if (prompt != null && prompt.trim() === "") {
       setAnswer(undefined);
     }
@@ -56,31 +65,33 @@ function App() {
   return (
     <div className="app">
       <h1 className="h1">Welcome to TutorGPT</h1>
-        <h2 className="h2">Powered by GPT-3</h2>
-      <div style={{backgroundColor: "white", display:'flex', flexDirection: 'row', justifyContent: 'space-between' , alignItems: 'center', width: '90%', borderRadius: '5px'}}>
-      <input
+      <h2 className="h2">Powered by GPT-3</h2>
+      <div style={{ backgroundColor: "white", display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '90%', borderRadius: '5px' }}>
+        <input
           type="text"
           className="spotlight__input"
           placeholder="What do you want to know?"
           disabled={loading}
-          
+          value={prompt}
+
           onChange={(e) => updatePrompt(e.target.value)}
           onKeyDown={(e) => sendPrompt(e)}
-      />
-      <img
+        />
+        <img
           className="enter"
           src={send}
           alt="search icon"
           onClick={handleIconClick}
-          style={{width: 20, height: 20, cursor: "pointer", marginRight: 15}}
+          style={{ width: 20, height: 20, cursor: "pointer", marginRight: 15 }}
         />
-        </div>
-        <div style={{
-          backgroundImage: loading ? `url(${loadingGif})` : ``,
-          }} className="spotlight__answer">{answer && <p>{answer}</p>}</div>
-        <h4 className="h3">*ChatGPT may produce inaccurate information about people, places, or facts.</h4>
-        <img className='image' src={robot} alt="loading" />
       </div>
+      <div style={{
+        backgroundImage: loading ? `url(${loadingGif})` : ``,
+      }} className="spotlight__answer">{answer && <p>{answer}</p>}</div>
+      <h4 className="h3">*ChatGPT may produce inaccurate information about people, places, or facts.</h4>
+      <h4 className="h3">**ChatGPT does not have the ability to process or interpret image-based questions or content.</h4>
+      <img className='image' src={robot} alt="loading" />
+    </div>
   );
 }
 
