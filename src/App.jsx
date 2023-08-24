@@ -5,12 +5,15 @@ import send from "./assets/send.png";
 import robot from "./assets/robot.png";
 import loadingGif from "./assets/loading.gif";
 import { url } from './utils/utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 
 function App() {
   const [prompt, updatePrompt] = useState("");
   const [loading, setLoading] = useState(false);
-  const [answer, setAnswer] = useState(undefined);
+  const [copied, setCopied] = useState(null); // null indicates nothing is copied
+  const [conversation, setConversation] = useState([]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -19,17 +22,24 @@ function App() {
   }, []);
   
 
-  useEffect(() => {
-    if (prompt != null && prompt.trim() === "") {
-      setAnswer(undefined);
-    }
-  }, [prompt]);
+  const handleCopyClick = (text, index) => {
+    navigator.clipboard.writeText(text);
+    setCopied(index); // Pass the index of the copied message
+    setTimeout(() => setCopied(null), 1000); // Reset the copied state after 1 second
+  };
+  
+
+  // useEffect(() => {
+  //   if (prompt != null && prompt.trim() === "") {
+  //     setAnswer(undefined);
+  //   }
+  // }, [prompt]);
 
   const sendPrompt = async (event) => {
-    if (event.key !== "Enter") {
+    if (event.key !== "Enter" || prompt.trim() === "") {
       return;
     }
-
+  
     try {
       setLoading(true);
 
@@ -46,13 +56,15 @@ function App() {
       }
 
       const { message } = await res.json();
-      setAnswer(message);
-    } catch (err) {
-      console.error(err, "err");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setConversation([...conversation, { prompt, response: message }]);
+    updatePrompt("");
+  } catch (err) {
+    console.error(err, "err");
+  } finally {
+    setLoading(false);
+  }
+};
+
   const handleIconClick = () => {
     if (!loading) {
       sendPrompt({ key: "Enter" });
@@ -63,32 +75,54 @@ function App() {
     <div className="app">
       <h1 className="h1">Welcome to TutorGPT</h1>
       <h2 className="h2">Powered by GPT-3</h2>
-      <div className="same-width" style={{ backgroundColor: "white", display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <input
-          type="text"
-          className="spotlight__input"
-          placeholder="What do you want to know?"
-          disabled={loading}
-          value={prompt}
-
-          onChange={(e) => updatePrompt(e.target.value)}
-          onKeyDown={(e) => sendPrompt(e)}
-        />
-        <img
-          className="enter"
-          src={send}
-          alt="search icon"
-          onClick={handleIconClick}
-          style={{ width: 20, height: 20, cursor: "pointer", marginRight: 15 }}
-        />
+      <div className="chat-window">
+        <div className="conversation">
+        {conversation.slice().reverse().map((item, index) => (
+  <div key={index}>
+    <div className="message user-message"><p>{item.prompt}</p></div>
+    <div className="message bot-message">
+      <div className='avatar-and-text'>
+        <img className="bot-avatar" src={robot} alt="robot avatar" />
+        <p>{index === 0 && loading ? <img style={{height: '20px', marginLeft: '10px'}} src={loadingGif} alt="loading" /> : item.response}</p>
       </div>
-      <div className="same-width spotlight__answer" style={{
-  backgroundImage: loading ? `url(${loadingGif})` : ``,
-}}>
-  {answer && <p>{answer}</p>}
-</div>
-      <h4 className="h3">*ChatGPT may produce inaccurate information about people, places, or facts.</h4>
-      <img className='image' src={robot} alt="loading" />
+      {copied === index ? (
+        <FontAwesomeIcon
+          className="copy-icon"
+          icon={faCheck} // Import and use the tick icon from FontAwesome
+          onClick={() => handleCopyClick(item.response, index)}
+        />
+      ) : (
+        <FontAwesomeIcon
+          className="copy-icon"
+          icon={faCopy}
+          onClick={() => handleCopyClick(item.response, index)}
+        />
+      )}
+    </div>
+  </div>
+))}
+
+        </div>
+        <div className="input-area">
+          <div className="input-wrapper">
+            <input
+              type="text"
+              className="input"
+              placeholder="What do you want to know?"
+              disabled={loading}
+              value={prompt}
+              onChange={(e) => updatePrompt(e.target.value)}
+              onKeyDown={(e) => sendPrompt(e)}
+            />
+            <img
+              className="send-icon"
+              src={send}
+              alt="send icon"
+              onClick={handleIconClick}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

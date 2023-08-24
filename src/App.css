@@ -7,7 +7,7 @@ body {
   font-family: 'San Francisco', sans-serif;}
 
 .app {
-  /* height: 100%; */
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,6 +17,16 @@ body {
   text-align: center;
 overflow: auto
 };
+
+.copy-icon {
+  position: absolute;
+  top: 10px; /* adjust as needed */
+  right: 10px; /* adjust as needed */
+  cursor: pointer;
+  font-size: 20px; /* adjust as needed */
+  padding-right: 40px;
+}
+
 
 .app-container {
   text-align: center;
@@ -42,39 +52,26 @@ overflow: auto
   font-family: 'San Francisco', sans-serif;
 }
 
-.image {
-  padding-left: 300px;
-  /* margin-top: -100px; */
-}
-
 .enter {
   height: 30px;
   width: 30px;
   margin-left: 15px; /* Add margin to separate the icon from the input */
 }
 
-.spotlight__answer {
-  min-height: 100px;
-  height: auto;
-  width:75%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  border-radius: 5px;
-  border-color: black;
-  border-width: 2px;
-  margin-bottom: 5px;
-  margin-top: 20px;
-  background-position: left 17px center;
-  background-repeat: no-repeat;
-  background-color: #fff;
-  background-size: 5%;
-  font-family: 'San Francisco', sans-serif;
-
+.bot-avatar {
+  width: 40px; /* adjust as needed */
+  height: 40px; /* adjust as needed */
+  margin-right: 10px;
+  float: left;
 }
-.spotlight__input::placeholder {
-  line-height: 1.5em;
+
+
+.bot-message {
+  text-align: left;
+  background-color: #c6e1ff;
+  position: relative; /* Make the bot-message a relative container */
+  display: flex; /* Add flex to align children horizontally */
+  justify-content: space-between; /* Align children vertically in the center */
 }
 
 .h3 {
@@ -82,7 +79,7 @@ overflow: auto
   font-weight: 300;
   font-size: 0.65em;
   width: 85%;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   text-align: left;
   font-family: 'San Francisco', sans-serif;
 }
@@ -98,19 +95,91 @@ overflow: auto
   color: white;
   font-weight: 300;
   font-size: 1em;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   font-family: 'San Francisco', sans-serif;
 }
 
-.same-width {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.chat-window {
+  background-color: transparent;
+  padding: 10px;
   width: 90%;
-  border-radius: 5px;
-  /* padding: 0 15px; Adding padding to the container */
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-end;
 }
 
+.conversation {
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-y: auto;
+  height: 450px; /* Set this to your preferred height */
+  background-color: transparent;
+}
+
+.message {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+
+}
+
+.user-message {
+  text-align: right;
+  background-color: #fff;
+}
+
+.input-area {
+  position: relative;
+  border-radius: 10px;
+  padding-left: 5px;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 20px;
+bottom: 30px;
+width: 90%;
+position: fixed;
+}
+
+.bot-message {
+  text-align: left;
+  background-color: #c6e1ff;
+  position: relative; /* Make the bot-message a relative container */
+  display: flex; /* Add flex to align children horizontally */
+  align-items: center; /* Align children vertically in the center */
+}
+
+
+.input {
+  border: none;
+  flex-grow: 1;
+  padding-right: 30px; /* Enough space for the image */
+  /* width: 100%; */
+height: 60px;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.send-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.send-icon:hover {
+  opacity: 0.2;
+}
 
 @keyframes cursor-blink {
   0% {
