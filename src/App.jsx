@@ -66,7 +66,7 @@ function App() {
     <div className="app">
       <h1 className="h1">Welcome to TutorGPT</h1>
       <h2 className="h2">Powered by GPT-3</h2>
-      <div style={{ backgroundColor: "white", display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '90%', borderRadius: '5px' }}>
+      <div className="same-width" style={{ backgroundColor: "white", display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <input
           type="text"
           className="spotlight__input"
@@ -85,11 +85,12 @@ function App() {
           style={{ width: 20, height: 20, cursor: "pointer", marginRight: 15 }}
         />
       </div>
-      <div style={{
-        backgroundImage: loading ? `url(${loadingGif})` : ``,
-      }} className="spotlight__answer">{answer && <p>{answer}</p>}</div>
+      <div className="same-width spotlight__answer" style={{
+  backgroundImage: loading ? `url(${loadingGif})` : ``,
+}}>
+  {answer && <p>{answer}</p>}
+</div>
       <h4 className="h3">*ChatGPT may produce inaccurate information about people, places, or facts.</h4>
-      <h4 className="h3">**ChatGPT does not have the ability to process or interpret image-based questions or content.</h4>
       <img className='image' src={robot} alt="loading" />
     </div>
   );
