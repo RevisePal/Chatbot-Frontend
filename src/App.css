@@ -30,13 +30,14 @@ overflow: auto
   color: #000;
   font-size: 16px;
   padding-left: 15px;
+  flex-grow: 1; /* Make the input take all available space */
   padding-top: 15px;
   padding-bottom: 15px;
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
   border-bottom-style: hidden;
-  width: 290px;
+  width: auto; /* Remove fixed width */
   border-radius: 5px;
   font-family: 'San Francisco', sans-serif;
 }
@@ -49,6 +50,7 @@ overflow: auto
 .enter {
   height: 30px;
   width: 30px;
+  margin-left: 15px; /* Add margin to separate the icon from the input */
 }
 
 .spotlight__answer {
@@ -101,8 +103,12 @@ overflow: auto
 }
 
 .same-width {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 90%;
   border-radius: 5px;
+  /* padding: 0 15px; Adding padding to the container */
 }
 
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import "./App.css";
-import lens from "./assets/lens.png";
 import send from "./assets/send.png";
 import robot from "./assets/robot.png";
 import loadingGif from "./assets/loading.gif";
@@ -9,18 +8,16 @@ import { url } from './utils/utils';
 
 
 function App() {
-  const [prompt, updatePrompt] = useState(undefined);
+  const [prompt, updatePrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState(undefined);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const question = urlParams.get('question');
-    updatePrompt(question)
-
-  }, [])
-
-  console.log(prompt)
+    updatePrompt(question || ""); // Use empty string if question is null
+  }, []);
+  
 
   useEffect(() => {
     if (prompt != null && prompt.trim() === "") {
