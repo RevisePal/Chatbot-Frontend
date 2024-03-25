@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: 'San Francisco';
   src: url('/src/assets/SF-Pro-Display-Regular.otf') format('opentype');
@@ -149,17 +153,17 @@ position: fixed;
 .bot-message {
   text-align: left;
   background-color: #c6e1ff;
-  position: relative; /* Make the bot-message a relative container */
-  display: flex; /* Add flex to align children horizontally */
-  align-items: center; /* Align children vertically in the center */
+  position: relative;
+  display: flex;
+  align-items: center; 
 }
 
 
-.input {
+/* .input {
   border: none;
   flex-grow: 1;
-  padding-right: 30px; /* Enough space for the image */
-  /* width: 100%; */
+  padding-right: 30px; 
+  width: 100%;
 height: 60px;
   border-radius: 10px;
   padding-left: 10px;
@@ -175,11 +179,11 @@ height: 60px;
 
 .input:focus {
   outline: none;
-}
+} */
 
-.send-icon:hover {
+/* .send-icon:hover {
   opacity: 0.2;
-}
+} */
 
 @keyframes cursor-blink {
   0% {
