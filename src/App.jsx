@@ -109,7 +109,7 @@ function App() {
                   <p>{item.prompt}</p>
                 </div>
                 <div className="message bot-message">
-                  <div className="avatar-and-text">
+                  <div className="avatar-and-text flex flex-row">
                     <img
                       className="bot-avatar"
                       src={robot}
