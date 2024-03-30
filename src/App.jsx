@@ -155,7 +155,7 @@ function App() {
       value={prompt}
       onChange={(e) => updatePrompt(e.target.value)}
       onKeyDown={(e) => sendPrompt(e)}
-      style={{ paddingRight: '3rem' }} // Adjust paddingRight to accommodate the icon
+      style={{ paddingRight: '2rem', paddingTop: 'calc((var(--input-height) - 1em) / 2)' }}
     />
     <img
       className="absolute right-2 bottom-2 w-8 h-8 cursor-pointer bg-transparent"
