@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const question = urlParams.get("question");
+    const question = urlParams.post("question");
     updatePrompt(question || ""); // Use empty string if question is null
   }, []);
 
