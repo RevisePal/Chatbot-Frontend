@@ -151,21 +151,21 @@ function App() {
     <input
       type="text"
       className="flex-grow border-none rounded-lg pl-2.5 pr-7.5 py-2 focus:outline-none text-sm md:text-base w-full break-all"
-      style={{ minWidth: '30px' }}
-      placeholder="Ask TutorGTP?"
+      style={{ width: '30px' }}
+      placeholder="Ask TutorGTP..."
       disabled={loading}
       value={prompt}
       onChange={(e) => updatePrompt(e.target.value)}
       onKeyDown={(e) => sendPrompt(e)}
     />
-   <div className="bg-white">
+  
       <img
-        className="w-8 h-8 cursor-pointer p-1"
+        className="w-8 h-8 cursor-pointer p-1 bg-white"
         src={send}
         alt="send icon"
         onClick={handleIconClick}
       />
-    </div>
+   
   </div>
 </div>
     </div>
