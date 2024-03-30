@@ -146,11 +146,11 @@ function App() {
         </div>
       </div>
       {/* Input box fixed at the bottom */}
-      <div className="fixed bottom-0 left-5 right-5 p-4 bg-white shadow-lg">
+      <div className="fixed bottom-5 left-5 right-5 p-4 bg-white shadow-lg">
   <div className="flex rounded-lg items-center border border-gray-300">
     <input
       type="text"
-      className="flex-grow border-none rounded-lg pl-2.5 pr-7.5 py-2 focus:outline-none text-sm md:text-base"
+      className="flex-grow border-none rounded-lg pl-2.5 pr-7.5 py-2 focus:outline-none text-sm md:text-base w-full break-all"
       style={{ minWidth: '10px' }} // Ensures input box doesn't collapse
       placeholder="What do you want to know?"
       disabled={loading}
@@ -166,7 +166,6 @@ function App() {
     />
   </div>
 </div>
-
     </div>
   );
 }
