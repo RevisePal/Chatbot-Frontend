@@ -146,28 +146,27 @@ function App() {
         </div>
       </div>
       {/* Input box fixed at the bottom */}
-      <div className="fixed bottom-5 left-5 right-5 p-4 bg-transparent">
-  <div className="flex rounded-lg items-center border border-gray-300">
+<div className="fixed bottom-5 left-5 right-5 p-4 bg-transparent">
+  <div className="relative flex rounded-lg items-center border border-gray-300">
     <input
       type="text"
-      className="flex-grow border-none rounded-lg pl-2.5 pr-7.5 py-2 focus:outline-none text-sm md:text-base w-full break-all"
-      style={{ width: '10px', height:'30px' }}
+      className="flex-grow border-none rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full break-all"
       placeholder="Ask TutorGTP..."
+      style={{ width: '10px', height: '30px' }}
       disabled={loading}
       value={prompt}
       onChange={(e) => updatePrompt(e.target.value)}
       onKeyDown={(e) => sendPrompt(e)}
     />
-  
-      <img
-        className="w-8 h-8 cursor-pointer p-1 bg-white"
-        src={send}
-        alt="send icon"
-        onClick={handleIconClick}
-      />
-   
+    <img
+      className="absolute right-0 mr-2 w-8 h-8 cursor-pointer bg-white"
+      src={send}
+      alt="send icon"
+      onClick={handleIconClick}
+    />
   </div>
 </div>
+
     </div>
   );
 }
