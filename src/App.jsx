@@ -159,7 +159,7 @@ function App() {
   style={{ paddingRight: 'calc(12px + 1rem)' }} // Adjust padding-right to accommodate content and send icon
 />
     <img
-      className="absolute right-0 mr-2 w-8 h-8 cursor-pointer bg-white"
+      className="right-0 mr-2 w-8 h-8 cursor-pointer bg-transparent"
       src={send}
       alt="send icon"
       onClick={handleIconClick}
