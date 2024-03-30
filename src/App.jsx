@@ -146,8 +146,8 @@ function App() {
         </div>
       </div>
       {/* Input box fixed at the bottom */}
-<div className="fixed bottom-5 left-5 right-5 p-4 bg-transparent">
-  <div className="relative rounded-lg border border-gray-300">
+<div className="fixed bottom-0 left-5 right-5 p-4 bg-transparent">
+  <div className="relative rounded-lg">
     <textarea
       className="flex-1 border-none rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-10 resize-none"
       placeholder="Ask TutorGTP..."
@@ -158,7 +158,7 @@ function App() {
       style={{ paddingRight: '3rem' }} // Adjust paddingRight to accommodate the icon
     />
     <img
-      className="absolute right-2 bottom-2 w-8 h-8 cursor-pointer bg-white"
+      className="absolute right-2 bottom-2 w-8 h-8 cursor-pointer bg-transparent"
       src={send}
       alt="send icon"
       onClick={handleIconClick}
