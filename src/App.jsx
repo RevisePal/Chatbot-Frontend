@@ -147,24 +147,25 @@ function App() {
       </div>
       {/* Input box fixed at the bottom */}
 <div className="fixed bottom-5 left-5 right-5 p-4 bg-transparent">
-  <div className="relative flex rounded-lg items-center border border-gray-300">
-    <input
-  type="text"
-  className="flex-grow border-none rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-4/5 min-h-20 break-all"
-  placeholder="Ask TutorGTP..."
-  disabled={loading}
-  value={prompt}
-  onChange={(e) => updatePrompt(e.target.value)}
-  onKeyDown={(e) => sendPrompt(e)}
-  style={{ paddingRight: 'calc(12px + 1rem)' }} // Adjust padding-right to accommodate content and send icon
-/>
-    <img
-      className="absolute right-0 mr-2 w-8 h-8 cursor-pointer bg-transparent"
-      src={send}
-      alt="send icon"
-      onClick={handleIconClick}
-    />
-  </div>
+  <div className="relative flex items-center justify-between rounded-lg border border-gray-300">
+  <input
+    type="text"
+    className="flex-4 border-none rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-10 break-all"
+    placeholder="Ask TutorGTP..."
+    disabled={loading}
+    value={prompt}
+    onChange={(e) => updatePrompt(e.target.value)}
+    onKeyDown={(e) => sendPrompt(e)}
+    style={{ paddingRight: 'calc(12px + 1rem)', wordWrap: 'break-word' }}
+  />
+  <img
+    className="w-8 h-8 cursor-pointer bg-white"
+    src={send}
+    alt="send icon"
+    onClick={handleIconClick}
+  />
+</div>
+
 </div>
 
     </div>
