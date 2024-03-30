@@ -148,16 +148,15 @@ function App() {
       {/* Input box fixed at the bottom */}
 <div className="fixed bottom-5 left-5 right-5 p-4 bg-transparent">
   <div className="relative flex items-center justify-between rounded-lg border border-gray-300">
-  <input
-    type="text"
-    className="flex-4 border-none rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-10 break-all"
-    placeholder="Ask TutorGTP..."
-    disabled={loading}
-    value={prompt}
-    onChange={(e) => updatePrompt(e.target.value)}
-    onKeyDown={(e) => sendPrompt(e)}
-    style={{ paddingRight: 'calc(12px + 1rem)', wordWrap: 'break-word' }}
-  />
+  <textarea
+  className="flex-4 border-none rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-10 resize-none break-all"
+  placeholder="Ask TutorGTP..."
+  disabled={loading}
+  value={prompt}
+  onChange={(e) => updatePrompt(e.target.value)}
+  onKeyDown={(e) => sendPrompt(e)}
+  
+/>
   <img
     className="w-8 h-8 cursor-pointer bg-white"
     src={send}
