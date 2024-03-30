@@ -146,7 +146,7 @@ function App() {
         </div>
       </div>
       {/* Input box fixed at the bottom */}
-      <div className="fixed bottom-5 left-0 right-0 p-4 bg-white shadow-lg">
+      <div className="fixed bottom-15 left-5 right-5 p-4 bg-white shadow-lg">
         <div className="flex rounded-lg">
           <input
             type="text"
