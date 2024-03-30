@@ -147,24 +147,26 @@ function App() {
       </div>
       {/* Input box fixed at the bottom */}
       <div className="fixed bottom-0 left-5 right-5 p-4 bg-white shadow-lg">
-        <div className="flex rounded-lg">
-          <input
-            type="text"
-            className="flex-grow border-none rounded-lg pl-2.5 pr-7.5 focus:outline-none"
-            placeholder="What do you want to know?"
-            disabled={loading}
-            value={prompt}
-            onChange={(e) => updatePrompt(e.target.value)}
-            onKeyDown={(e) => sendPrompt(e)}
-          />
-          <img
-            className="w-5 h-5 cursor-pointer"
-            src={send}
-            alt="send icon"
-            onClick={handleIconClick}
-          />
-        </div>
-      </div>
+  <div className="flex rounded-lg items-center border border-gray-300">
+    <input
+      type="text"
+      className="flex-grow border-none rounded-lg pl-2.5 pr-7.5 py-2 focus:outline-none text-sm md:text-base"
+      style={{ minWidth: '10px' }} // Ensures input box doesn't collapse
+      placeholder="What do you want to know?"
+      disabled={loading}
+      value={prompt}
+      onChange={(e) => updatePrompt(e.target.value)}
+      onKeyDown={(e) => sendPrompt(e)}
+    />
+    <img
+      className="w-8 h-8 cursor-pointer p-1"
+      src={send}
+      alt="send icon"
+      onClick={handleIconClick}
+    />
+  </div>
+</div>
+
     </div>
   );
 }
