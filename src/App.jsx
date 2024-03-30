@@ -151,7 +151,7 @@ function App() {
     <input
       type="text"
       className="flex-grow border-none rounded-lg pl-2.5 pr-7.5 py-2 focus:outline-none text-sm md:text-base w-full break-all"
-      style={{ width: '30px' }}
+      style={{ width: '10px', height:'30px' }}
       placeholder="Ask TutorGTP..."
       disabled={loading}
       value={prompt}
