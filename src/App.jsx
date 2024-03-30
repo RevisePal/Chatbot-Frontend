@@ -89,7 +89,7 @@ function App() {
         Welcome to TutorGPT
       </h1>
       <h2 className="text-white w-full text-base font-light font-sans">
-        Powered by GPT-3
+        Powered by GPT-4
       </h2>
       {/* Use flex-grow to make this div take up all available space, pushing the input box to the bottom */}
       <div
@@ -146,7 +146,7 @@ function App() {
         </div>
       </div>
       {/* Input box fixed at the bottom */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
+      <div className="fixed bottom-5 left-0 right-0 p-4 bg-white shadow-lg">
         <div className="flex rounded-lg">
           <input
             type="text"
