@@ -150,7 +150,7 @@ function App() {
   <div className="relative flex rounded-lg items-center border border-gray-300">
     <input
   type="text"
-  className="flex-grow border-none rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-40 break-all"
+  className="flex-grow border-none rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-4/5 min-h-20 break-all"
   placeholder="Ask TutorGTP..."
   disabled={loading}
   value={prompt}
