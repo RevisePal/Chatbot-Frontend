@@ -94,7 +94,7 @@ function App() {
       {/* Use flex-grow to make this div take up all available space, pushing the input box to the bottom */}
       <div
         className="flex-grow w-10/12 flex flex-col items-center justify-end"
-        style={{ paddingBottom: "4rem" }}
+        style={{ paddingBottom: "6rem" }}
       >
         <div
           className="w-full flex flex-col-reverse overflow-y-auto bg-transparent"
