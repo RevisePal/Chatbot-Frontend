@@ -26,11 +26,10 @@ function App() {
     setTimeout(() => setCopied(null), 1000); // Reset the copied state after 1 second
   };
 
-  // useEffect(() => {
-  //   if (prompt != null && prompt.trim() === "") {
-  //     setAnswer(undefined);
-  //   }
-  // }, [prompt]);
+  function stripHtmlTags(html) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
+  }
 
   const sendPrompt = async (event) => {
     if (event.key !== "Enter" || prompt.trim() === "") {
@@ -105,9 +104,11 @@ function App() {
             .reverse()
             .map((item, index) => (
               <div key={index}>
-                <div className="message user-message">
-                  <p>{item.prompt}</p>
-                </div>
+                <div className="message user-message" style={{ marginBottom: "1rem", textAlign: "left" }}>
+  <p style={{ color: "#333", fontFamily: "Arial, sans-serif", fontSize: "1rem", lineHeight: "1.5", fontWeight: "700" }}>{stripHtmlTags(item.prompt)}</p>
+</div>
+
+
                 <div className="message bot-message">
                   <div className="avatar-and-text flex flex-row">
                     <img
@@ -146,25 +147,25 @@ function App() {
         </div>
       </div>
       {/* Input box fixed at the bottom */}
-<div className="fixed bottom-0 left-5 right-5 p-4 bg-transparent">
-  <div className="relative rounded-lg">
-    <textarea
-      className="flex-1 border border-gray-300 rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-15 resize-none"
-      placeholder="Ask TutorGTP..."
-      disabled={loading}
-      value={prompt}
-      onChange={(e) => updatePrompt(e.target.value)}
-      onKeyDown={(e) => sendPrompt(e)}
-      style={{ paddingRight: '2rem' }}
-    />
-    <img
-      className="absolute right-2 bottom-4 w-8 h-8 cursor-pointer bg-transparent"
-      src={send}
-      alt="send icon"
-      onClick={handleIconClick}
-    />
-  </div>
-   </div>
+      <div className="fixed bottom-0 left-5 right-5 p-4 bg-transparent mt-4">
+        <div className="relative rounded-lg ">
+          <textarea
+            className="flex-1 border border-gray-300 rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-15 resize-none"
+            placeholder="Ask TutorGTP..."
+            disabled={loading}
+            value={prompt}
+            onChange={(e) => updatePrompt(e.target.value)}
+            onKeyDown={(e) => sendPrompt(e)}
+            style={{ paddingRight: "2rem" }}
+          />
+          <img
+            className="absolute right-2 bottom-6 w-8 h-8 cursor-pointer bg-transparent"
+            src={send}
+            alt="send icon"
+            onClick={handleIconClick}
+          />
+        </div>
+      </div>
     </div>
   );
 }
