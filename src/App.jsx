@@ -149,16 +149,16 @@ function App() {
 <div className="fixed bottom-0 left-5 right-5 p-4 bg-transparent">
   <div className="relative rounded-lg">
     <textarea
-      className="flex-1 border-none rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-10 resize-none"
+      className="flex-1 border border-gray-300 rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-15 resize-none"
       placeholder="Ask TutorGTP..."
       disabled={loading}
       value={prompt}
       onChange={(e) => updatePrompt(e.target.value)}
       onKeyDown={(e) => sendPrompt(e)}
-      style={{ paddingRight: '2rem', paddingTop: 'calc((var(--input-height) - 1em) / 2)' }}
+      style={{ paddingRight: '2rem' }}
     />
     <img
-      className="absolute right-2 bottom-2 w-8 h-8 cursor-pointer bg-transparent"
+      className="absolute right-2 bottom-4 w-8 h-8 cursor-pointer bg-transparent"
       src={send}
       alt="send icon"
       onClick={handleIconClick}
