@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import send from "./assets/send.png";
 import robot from "./assets/robot.png";
+import student from "./assets/student.jpg";
 import loadingGif from "./assets/loading.gif";
 // import { url } from './utils/utils';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,8 +28,8 @@ function App() {
   };
 
   function stripHtmlTags(html) {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    return doc.body.textContent || '';
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
   }
 
   const sendPrompt = async (event) => {
@@ -104,10 +105,29 @@ function App() {
             .reverse()
             .map((item, index) => (
               <div key={index}>
-                <div className="message user-message" style={{ marginBottom: "1rem", textAlign: "left" }}>
-  <p style={{ color: "#333", fontFamily: "Arial, sans-serif", fontSize: "1rem", lineHeight: "1.5", fontWeight: "700" }}>{stripHtmlTags(item.prompt)}</p>
-</div>
-
+                <div
+                  className="message user-message"
+                  style={{ marginBottom: "1rem", textAlign: "left" }}
+                >
+                  <div className="avatar-and-text flex flex-row">
+                    <img
+                      className="bot-avatar"
+                      src={student}
+                      alt="robot avatar"
+                    />
+                    <p
+                      style={{
+                        color: "#333",
+                        fontFamily: "Arial, sans-serif",
+                        fontSize: "1rem",
+                        lineHeight: "1.5",
+                        fontWeight: "700",
+                      }}
+                    >
+                      {item.prompt}
+                    </p>
+                  </div>
+                </div>
 
                 <div className="message bot-message">
                   <div className="avatar-and-text flex flex-row">
@@ -150,14 +170,15 @@ function App() {
       <div className="fixed bottom-0 left-5 right-5 p-4 bg-transparent mt-4">
         <div className="relative rounded-lg ">
           <textarea
-            className="flex-1 border border-gray-300 rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-15 resize-none"
+            className="flex-grow rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-15 resize-none"
             placeholder="Ask TutorGTP..."
             disabled={loading}
-            value={prompt}
+            value={stripHtmlTags(prompt)}
             onChange={(e) => updatePrompt(e.target.value)}
             onKeyDown={(e) => sendPrompt(e)}
             style={{ paddingRight: "2rem" }}
           />
+
           <img
             className="absolute right-2 bottom-6 w-8 h-8 cursor-pointer bg-transparent"
             src={send}
