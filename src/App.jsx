@@ -124,7 +124,7 @@ function App() {
                         fontWeight: "700",
                       }}
                     >
-                      {item.prompt}
+                      {stripHtmlTags(item.prompt)}
                     </p>
                   </div>
                 </div>
