@@ -69,23 +69,30 @@ body {
   float: left;
 }
 .avatar-and-text {
-  display: inline-block; /* Ensures it wraps the content */
-  background-color: #c6e1ff; /* Matches the message bubble */
+  display: inline-block;
+  background-color: #c6e1ff;
   border-radius: 10px;
   padding: 10px;
   max-width: 90%;
-  overflow: hidden; /* Hides anything overflowing vertically */
-  word-wrap: break-word; /* Prevents breaking words unnecessarily */
+  overflow: hidden; /* Hides vertical overflow */
+  word-wrap: break-word;
+  white-space: normal; /* Allows normal text wrapping */
 }
 
-.mathjax-container {
+.mathjax-wrapper {
   display: block;
   max-width: 100%;
-  overflow-x: auto; /* Enables horizontal scrolling */
-  white-space: nowrap; /* Prevents wrapping */
   padding: 5px;
+  background-color: #c6e1ff;
   border-radius: 10px;
-  background-color: #c6e1ff; /* Ensures the background matches */
+}
+
+.mathjax-content {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: break-word;
+  font-size: clamp(12px, 2vw, 18px); /* Shrinks if too big */
 }
 
 .bot-message {

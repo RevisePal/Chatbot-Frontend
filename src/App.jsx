@@ -33,6 +33,17 @@ function App() {
     setCopied(index);
     setTimeout(() => setCopied(null), 1000);
   };
+  const cleanResponse = (text) => {
+    return text
+      .replace(/^### /gm, "") // Remove leading ###
+      .replace(/\*\*\*(.*?)\*\*\*/gm, "$1") // Remove ***bold italic***
+      .replace(/\*\*(.*?)\*\*/gm, "$1") // Remove **bold**
+      .replace(/\*(.*?)\*/gm, "$1") // Remove *italic*
+      .replace(/`(.*?)`/gm, "$1") // Remove inline code blocks
+      .replace(/^- /gm, "\n• ") // Ensure bullet points start on a new line
+      .replace(/\n{3,}/g, "\n\n") // Prevent excessive empty lines
+      .trim();
+  };
 
   const stripHtmlTags = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
@@ -112,24 +123,19 @@ function App() {
                   </div>
                   <div className="message bot-message">
                     <div className="avatar-and-text">
-                      {/* <img
-                        className="bot-avatar"
-                        src={robot}
-                        alt="robot avatar"
-                      /> */}
-                      <p>
-                        {index === 0 && loading ? (
-                          <img
-                            style={{ height: "20px", marginLeft: "10px" }}
-                            src={loadingGif}
-                            alt="loading"
-                          />
-                        ) : (
-                          <div className="mathjax-container">
-                            <MathJax>{`${item.response}`}</MathJax>
-                          </div>
-                        )}
-                      </p>
+                      {index === 0 && loading ? (
+                        <img
+                          style={{ height: "20px", marginLeft: "10px" }}
+                          src={loadingGif}
+                          alt="loading"
+                        />
+                      ) : (
+                        <div className="mathjax-wrapper">
+                          <MathJax className="mathjax-content">
+                            {cleanResponse(item.response)}
+                          </MathJax>
+                        </div>
+                      )}
                     </div>
                     {item.response && (
                       <FontAwesomeIcon
