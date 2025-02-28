@@ -99,7 +99,7 @@ function App() {
                     className="message user-message"
                     style={{ marginBottom: "1rem", textAlign: "left" }}
                   >
-                    <div className="avatar-and-text flex flex-row">
+                    <div className="flex flex-row">
                       <img
                         className="bot-avatar"
                         src={student}
@@ -111,12 +111,12 @@ function App() {
                     </div>
                   </div>
                   <div className="message bot-message">
-                    <div className="avatar-and-text flex flex-row">
-                      <img
+                    <div className="avatar-and-text">
+                      {/* <img
                         className="bot-avatar"
                         src={robot}
                         alt="robot avatar"
-                      />
+                      /> */}
                       <p>
                         {index === 0 && loading ? (
                           <img
