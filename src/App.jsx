@@ -95,21 +95,6 @@ function App() {
               .reverse()
               .map((item, index) => (
                 <div key={index}>
-                  <div
-                    className="message user-message"
-                    style={{ marginBottom: "1rem", textAlign: "left" }}
-                  >
-                    <div className="avatar-and-text flex flex-row">
-                      <img
-                        className="bot-avatar"
-                        src={student}
-                        alt="user avatar"
-                      />
-                      <p className="text-gray-900 font-semibold">
-                        {stripHtmlTags(item.prompt)}
-                      </p>
-                    </div>
-                  </div>
                   <div className="message bot-message">
                     <div className="avatar-and-text flex flex-row">
                       <img
@@ -117,7 +102,13 @@ function App() {
                         src={robot}
                         alt="robot avatar"
                       />
-                      <p>
+                      <div
+                        style={{
+                          maxWidth: "100%",
+                          overflow: "hidden",
+                          wordWrap: "break-word",
+                        }}
+                      >
                         {index === 0 && loading ? (
                           <img
                             style={{ height: "20px", marginLeft: "10px" }}
@@ -127,7 +118,7 @@ function App() {
                         ) : (
                           <MathJax>{`${item.response}`}</MathJax>
                         )}
-                      </p>
+                      </div>
                     </div>
                     {item.response && (
                       <FontAwesomeIcon
