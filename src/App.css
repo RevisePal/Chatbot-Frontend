@@ -83,6 +83,7 @@ body {
   position: relative; /* Make the bot-message a relative container */
   display: flex; /* Add flex to align children horizontally */
   justify-content: space-between; /* Align children vertically in the center */
+  width: auto;
 }
 
 .h3 {
