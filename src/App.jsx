@@ -152,7 +152,11 @@ function App() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") sendPrompt();
               }}
-              style={{ paddingRight: "2rem" }}
+              style={{
+                paddingRight: "2rem",
+                boxSizing: "border-box", // Ensure padding is included in the element's width
+                overflowX: "hidden", // Prevent horizontal scrolling
+              }}
             />
             <img
               className="absolute right-2 bottom-6 w-8 h-8 cursor-pointer bg-transparent"
