@@ -69,20 +69,23 @@ body {
   float: left;
 }
 .avatar-and-text {
-  display: inline-block; /* Ensures the div wraps tightly around the content */
-  background-color: #c6e1ff; /* Ensures background covers the entire text area */
-  border-radius: 10px; /* Ensures smooth rounded corners */
-  padding: 10px; /* Padding for spacing */
-  max-width: 90%; /* Prevents messages from becoming too wide */
-  overflow: hidden; /* Prevents content from escaping the container */
-  word-wrap: break-word; /* Allows words to break and wrap within the container */
+  display: inline-block; /* Ensures it wraps the content */
+  background-color: #c6e1ff; /* Matches the message bubble */
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 90%;
+  overflow: hidden; /* Hides anything overflowing vertically */
+  word-wrap: break-word; /* Prevents breaking words unnecessarily */
 }
+
 .mathjax-container {
-  width: auto;
-  overflow-wrap: break-word; /* Ensures equations break within available width */
-  word-wrap: break-word;
-  white-space: normal; /* Allows content to wrap if it's too long */
-  display: inline-block;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Prevents wrapping */
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #c6e1ff; /* Ensures the background matches */
 }
 
 .bot-message {
