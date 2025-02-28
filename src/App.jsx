@@ -154,8 +154,10 @@ function App() {
               }}
               style={{
                 paddingRight: "2rem",
-                boxSizing: "border-box", // Ensure padding is included in the element's width
+                boxSizing: "border-box", // Ensures padding is included in the element's width
                 overflowX: "hidden", // Prevent horizontal scrolling
+                whiteSpace: "pre-wrap", // Allow wrapping of text
+                wordWrap: "break-word", // Break long words to fit within the container
               }}
             />
             <img
