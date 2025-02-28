@@ -152,7 +152,7 @@ function App() {
         <div className="fixed bottom-0 left-5 right-5 p-4 bg-transparent mt-4">
           <div className="relative rounded-lg">
             <textarea
-              className="flex-grow rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-sm md:text-base w-full min-h-15 resize-none"
+              className="flex-grow rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-base md:text-lg w-full min-h-15 resize-none mb-6"
               placeholder="Ask TutorGPT..."
               disabled={loading}
               value={stripHtmlTags(prompt)}
@@ -163,13 +163,16 @@ function App() {
               style={{ paddingRight: "2rem" }}
             />
             <img
-              className="absolute right-2 bottom-6 w-8 h-8 cursor-pointer bg-transparent"
+              className="absolute right-2 bottom-6 w-8 h-8 mb-6 cursor-pointer bg-transparent"
               src={send}
               alt="send icon"
               onClick={sendPrompt}
             />
           </div>
         </div>
+        <p className="text-xs text-gray-500 mt-2 mb-4 text-left italic">
+          *TutorGPT can make mistakes. Please verify important information.
+        </p>
       </div>
     </MathJaxContext>
   );
