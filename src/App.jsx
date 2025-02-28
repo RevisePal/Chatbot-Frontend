@@ -95,6 +95,21 @@ function App() {
               .reverse()
               .map((item, index) => (
                 <div key={index}>
+                  <div
+                    className="message user-message"
+                    style={{ marginBottom: "1rem", textAlign: "left" }}
+                  >
+                    <div className="avatar-and-text flex flex-row">
+                      <img
+                        className="bot-avatar"
+                        src={student}
+                        alt="user avatar"
+                      />
+                      <p className="text-gray-900 font-semibold">
+                        {stripHtmlTags(item.prompt)}
+                      </p>
+                    </div>
+                  </div>
                   <div className="message bot-message">
                     <div className="avatar-and-text flex flex-row">
                       <img
@@ -102,13 +117,7 @@ function App() {
                         src={robot}
                         alt="robot avatar"
                       />
-                      <div
-                        style={{
-                          maxWidth: "100%",
-                          overflow: "hidden",
-                          wordWrap: "break-word",
-                        }}
-                      >
+                      <p>
                         {index === 0 && loading ? (
                           <img
                             style={{ height: "20px", marginLeft: "10px" }}
@@ -116,9 +125,11 @@ function App() {
                             alt="loading"
                           />
                         ) : (
-                          <MathJax>{`${item.response}`}</MathJax>
+                          <div className="mathjax-container">
+                            <MathJax>{`${item.response}`}</MathJax>
+                          </div>
                         )}
-                      </div>
+                      </p>
                     </div>
                     {item.response && (
                       <FontAwesomeIcon
@@ -143,13 +154,7 @@ function App() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") sendPrompt();
               }}
-              style={{
-                paddingRight: "2rem",
-                boxSizing: "border-box", // Ensures padding is included in the element's width
-                overflowX: "hidden", // Prevent horizontal scrolling
-                whiteSpace: "pre-wrap", // Allow wrapping of text
-                wordWrap: "break-word", // Break long words to fit within the container
-              }}
+              style={{ paddingRight: "2rem" }}
             />
             <img
               className="absolute right-2 bottom-6 w-8 h-8 cursor-pointer bg-transparent"

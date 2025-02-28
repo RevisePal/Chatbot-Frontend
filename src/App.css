@@ -3,12 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'San Francisco';
-  src: url('/src/assets/SF-Pro-Display-Regular.otf') format('opentype');
+  font-family: "San Francisco";
+  src: url("/src/assets/SF-Pro-Display-Regular.otf") format("opentype");
 }
 
 body {
-  font-family: 'San Francisco', sans-serif;}
+  font-family: "San Francisco", sans-serif;
+}
 
 .app {
   height: 100%;
@@ -16,11 +17,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background-image: linear-gradient(#0E64C1, #2796E6);
+  background-image: linear-gradient(#0e64c1, #2796e6);
   padding-top: 40px;
   text-align: center;
-overflow: auto
-};
+  overflow: auto;
+}
 
 .copy-icon {
   position: absolute;
@@ -30,7 +31,6 @@ overflow: auto
   font-size: 20px; /* adjust as needed */
   padding-right: 40px;
 }
-
 
 .app-container {
   text-align: center;
@@ -53,7 +53,7 @@ overflow: auto
   border-bottom-style: hidden;
   width: auto; /* Remove fixed width */
   border-radius: 5px;
-  font-family: 'San Francisco', sans-serif;
+  font-family: "San Francisco", sans-serif;
 }
 
 .enter {
@@ -69,6 +69,13 @@ overflow: auto
   float: left;
 }
 
+.mathjax-container {
+  width: 100%;
+  overflow-wrap: break-word; /* Ensures equations break within available width */
+  word-wrap: break-word;
+  white-space: normal; /* Allows content to wrap if it's too long */
+  display: inline-block;
+}
 
 .bot-message {
   text-align: left;
@@ -85,13 +92,13 @@ overflow: auto
   width: 85%;
   /* margin-bottom: 10px; */
   text-align: left;
-  font-family: 'San Francisco', sans-serif;
+  font-family: "San Francisco", sans-serif;
 }
 
 .h1 {
   color: white;
   margin-bottom: 0px;
-  font-family: 'San Francisco', sans-serif;
+  font-family: "San Francisco", sans-serif;
   font-size: 2.2em;
 }
 
@@ -100,7 +107,7 @@ overflow: auto
   font-weight: 300;
   font-size: 1em;
   /* margin-bottom: 20px; */
-  font-family: 'San Francisco', sans-serif;
+  font-family: "San Francisco", sans-serif;
 }
 
 .chat-window {
@@ -124,7 +131,6 @@ overflow: auto
   padding: 10px;
   margin: 5px;
   border-radius: 10px;
-
 }
 
 .user-message {
@@ -145,9 +151,9 @@ overflow: auto
   background-color: white;
   border-radius: 10px;
   margin-top: 20px;
-bottom: 30px;
-width: 90%;
-position: fixed;
+  bottom: 30px;
+  width: 90%;
+  position: fixed;
 }
 
 .bot-message {
@@ -155,9 +161,8 @@ position: fixed;
   background-color: #c6e1ff;
   position: relative;
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
-
 
 /* .input {
   border: none;
