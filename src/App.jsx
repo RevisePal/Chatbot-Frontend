@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import send from "./assets/send.png";
@@ -33,15 +34,16 @@ function App() {
     setCopied(index);
     setTimeout(() => setCopied(null), 1000);
   };
+
   const cleanResponse = (text) => {
-    return text
-      .replace(/^### /gm, "") // Remove leading ###
-      .replace(/\*\*\*(.*?)\*\*\*/gm, "$1") // Remove ***bold italic***
-      .replace(/\*\*(.*?)\*\*/gm, "$1") // Remove **bold**
-      .replace(/\*(.*?)\*/gm, "$1") // Remove *italic*
-      .replace(/`(.*?)`/gm, "$1") // Remove inline code blocks
-      .replace(/^- /gm, "\n• ") // Ensure bullet points start on a new line
-      .replace(/\n{3,}/g, "\n\n") // Prevent excessive empty lines
+    return (text || "")
+      .replace(/^### /gm, "")
+      .replace(/\*\*\*(.*?)\*\*\*/gm, "$1")
+      .replace(/\*\*(.*?)\*\*/gm, "$1")
+      .replace(/\*(.*?)\*/gm, "$1")
+      .replace(/`(.*?)`/gm, "$1")
+      .replace(/^- /gm, "\n• ")
+      .replace(/\n{3,}/g, "\n\n")
       .trim();
   };
 
@@ -51,34 +53,63 @@ function App() {
   };
 
   const sendPrompt = async () => {
-    if (loading || prompt.trim() === "") return;
+    const trimmed = (prompt ?? "").trim();
+    if (loading || trimmed.length === 0) return;
 
     setLoading(true);
+
+    const controller = new AbortController();
+    const TIMEOUT_MS = 30000;
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
     try {
-      const conversations = conversation
-        .map((conv) => ({
-          role: "user",
-          content: conv.prompt,
-        }))
-        .concat({
-          role: "user",
-          content: prompt,
-        });
+      // Build full messages history: user then assistant per turn.
+      const messages = [];
+      for (const turn of conversation ?? []) {
+        if (turn?.prompt) messages.push({ role: "user", content: String(turn.prompt) });
+        if (turn?.response) messages.push({ role: "assistant", content: String(turn.response) });
+      }
+      messages.push({ role: "user", content: trimmed });
 
       const res = await fetch("https://ai-bot-backend.onrender.com/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ conversations }),
+        body: JSON.stringify({ conversations: messages }),
+        signal: controller.signal,
       });
 
-      if (!res.ok) throw new Error("Something went wrong");
+      const raw = await res.text(); // read once
 
-      const { message } = await res.json();
-      setConversation([...conversation, { prompt, response: message }]);
+      if (!res.ok) {
+        // Prefer server-provided error message if available
+        let serverMsg = res.statusText;
+        try {
+          const maybe = JSON.parse(raw);
+          serverMsg = maybe?.error || maybe?.message || raw || res.statusText;
+        } catch {
+          serverMsg = raw || res.statusText;
+        }
+        throw new Error(`Request failed (${res.status}): ${serverMsg}`);
+      }
+
+      let payload;
+      try {
+        payload = JSON.parse(raw);
+      } catch {
+        throw new Error("Invalid JSON response from server");
+      }
+
+      const message = payload?.message ?? "";
+      if (!message) throw new Error("Empty response from server");
+
+      // Functional update to avoid stale closure/races
+      setConversation((prev) => [...(prev || []), { prompt: trimmed, response: message }]);
       updatePrompt("");
+      return message;
     } catch (err) {
       console.error(err);
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
     }
   };
@@ -158,7 +189,11 @@ function App() {
               value={stripHtmlTags(prompt)}
               onChange={(e) => updatePrompt(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") sendPrompt();
+                // Send on Enter; allow Shift+Enter for newline
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault(); // avoid newline
+                  sendPrompt();
+                }
               }}
               style={{ paddingRight: "2rem" }}
             />
