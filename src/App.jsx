@@ -38,7 +38,7 @@ function App() {
     (text || "")
       .replace(/^### /gm, "")
       .replace(/\*\*\*(.*?)\*\*\*/gm, "$1")
-      .replace(/\*\*(.*?)\*\*/gm, "$1")
+      .replace(/\*\*(.*?)\*\*\*/gm, "$1")
       .replace(/\*(.*?)\*/gm, "$1")
       .replace(/`(.*?)`/gm, "$1")
       .replace(/^- /gm, "\n• ")
@@ -69,7 +69,8 @@ function App() {
       }
       messages.push({ role: "user", content: trimmed });
 
-      const res = await fetch("https://ai-bot-backend.onrender.com/ask", {
+      // ✅ UPDATED URL HERE
+      const res = await fetch("https://chatbot-backend-6fj3.onrender.com/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ conversations: messages }),
