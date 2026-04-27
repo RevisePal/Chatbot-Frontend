@@ -82,9 +82,6 @@ body {
 .mathjax-wrapper {
   display: block;
   max-width: 100%;
-  padding: 5px;
-  background-color: #c6e1ff;
-  border-radius: 10px;
 }
 
 .mathjax-content {

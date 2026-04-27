@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import send from "./assets/send.png";
@@ -14,7 +13,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(null);
   const [conversation, setConversation] = useState([]);
-  const [error, setError] = useState(null); // show failures
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -25,7 +24,7 @@ function App() {
   useEffect(() => {
     const chatContainer = document.getElementById("chat-container");
     if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
-  }, [conversation, loading]); // include loading so spinner stays in view
+  }, [conversation, loading]);
 
   const handleCopyClick = (text, index) => {
     if (!text) return;
@@ -69,8 +68,7 @@ function App() {
       }
       messages.push({ role: "user", content: trimmed });
 
-      // ✅ UPDATED URL HERE
-      const res = await fetch("https://chatbot-backend-6fj3.onrender.com/ask", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ conversations: messages }),
@@ -115,33 +113,53 @@ function App() {
 
   return (
     <MathJaxContext>
-      <div className="flex flex-col items-center justify-start w-screen pt-10 text-center overflow-auto min-h-screen bg-gradient-to-b from-blue-700 to-blue-400">
-        <h1 className="text-white w-full text-4xl font-sans">Welcome to TutorGPT</h1>
-        <h2 className="text-white w-full text-base font-light font-sans">Powered by GPT-4o</h2>
+      <div className="flex flex-col items-center justify-start w-full min-h-screen bg-gradient-to-b from-blue-700 to-blue-400 pt-6 sm:pt-10 overflow-hidden">
+        <h1 className="text-white text-2xl sm:text-4xl font-sans text-center px-4">
+          Welcome to TutorGPT
+        </h1>
+        <h2 className="text-white text-sm sm:text-base font-light font-sans mb-4">
+          Powered by GPT-5.5
+        </h2>
 
-        <div className="flex-grow w-10/12 flex flex-col items-center justify-end" style={{ paddingBottom: "6rem" }}>
-          <div id="chat-container" className="w-full flex flex-col-reverse overflow-y-auto" style={{ maxHeight: "calc(100vh - 12rem)" }}>
+        <div className="flex-grow w-11/12 sm:w-9/12 flex flex-col items-center justify-end pb-28 sm:pb-24">
+          <div
+            id="chat-container"
+            className="w-full flex flex-col-reverse overflow-y-auto px-2 sm:px-4"
+            style={{ maxHeight: "calc(100vh - 12rem)" }}
+          >
             {/* Messages */}
             {conversation
               .slice()
               .reverse()
               .map((item, index) => (
-                <div key={index}>
-                  <div className="message user-message" style={{ marginBottom: "1rem", textAlign: "left" }}>
-                    <div className="flex flex-row">
-                      <img className="bot-avatar" src={student} alt="user avatar" />
-                      <p className="text-gray-900 font-semibold">{stripHtmlTags(item.prompt)}</p>
+                <div key={index} className="flex flex-col mb-4">
+                  <div className="self-end bg-white text-gray-900 max-w-[90%] sm:max-w-[80%] text-sm sm:text-base flex flex-col p-3 rounded-2xl mb-2">
+                    <div className="flex items-start mb-1">
+                      <img
+                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-full mr-2"
+                        src={student}
+                        alt="user avatar"
+                      />
+                      <div className="break-words">{stripHtmlTags(item.prompt)}</div>
                     </div>
                   </div>
-                  <div className="message bot-message">
-                    <div className="avatar-and-text">
-                      <div className="mathjax-wrapper">
-                        <MathJax className="mathjax-content">{cleanResponse(item.response)}</MathJax>
+
+                  <div className="self-start bg-blue-100 text-gray-900 max-w-[90%] sm:max-w-[80%] text-sm sm:text-base flex flex-col p-3 rounded-2xl">
+                    <div className="flex items-start mb-1">
+                      <img
+                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-full mr-2"
+                        src={robot}
+                        alt="bot avatar"
+                      />
+                      <div className="mathjax-wrapper break-words">
+                        <MathJax className="mathjax-content">
+                          {cleanResponse(item.response)}
+                        </MathJax>
                       </div>
                     </div>
                     {item.response && (
                       <FontAwesomeIcon
-                        className="hover:cursor-pointer p-2 hover:bg-gray-300"
+                        className="hover:cursor-pointer p-1 self-end text-gray-500 hover:text-gray-700"
                         icon={copied === index ? faCheck : faCopy}
                         onClick={() => handleCopyClick(item.response, index)}
                       />
@@ -150,17 +168,23 @@ function App() {
                 </div>
               ))}
 
-            {/* Global loading bubble so user sees activity even with empty history */}
+            {/* Loading bubble */}
             {loading && (
-              <div className="message bot-message">
-                <div className="avatar-and-text">
-                  <img className="bot-avatar" src={robot} alt="bot avatar" />
-                  <img style={{ height: "20px", marginLeft: "10px" }} src={loadingGif} alt="loading" />
-                </div>
+              <div className="self-start bg-blue-100 rounded-2xl p-3 shadow max-w-[85%] flex items-center">
+                <img
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full mr-2"
+                  src={robot}
+                  alt="bot avatar"
+                />
+                <img
+                  className="h-4 sm:h-5"
+                  src={loadingGif}
+                  alt="loading"
+                />
               </div>
             )}
 
-            {/* Error banner (non-blocking) */}
+            {/* Error banner */}
             {error && (
               <div className="w-full my-2">
                 <div className="mx-auto max-w-xl text-sm text-red-100 bg-red-600/80 rounded px-3 py-2">
@@ -171,10 +195,11 @@ function App() {
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-5 right-5 p-4 bg-transparent mt-4">
-          <div className="relative rounded-lg">
+        {/* Input area */}
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-blue-700/40 backdrop-blur-md">
+          <div className="relative flex items-center">
             <textarea
-              className="flex-grow rounded-lg pl-2.5 pr-12 py-2 focus:outline-none text-base md:text-lg w-full min-h-15 resize-none mb-6"
+              className="flex-grow rounded-lg pl-3 pr-12 py-2 focus:outline-none text-sm sm:text-base w-full resize-none bg-white"
               placeholder="Ask TutorGPT..."
               disabled={loading}
               value={stripHtmlTags(prompt)}
@@ -185,25 +210,21 @@ function App() {
                   sendPrompt();
                 }
               }}
-              style={{ paddingRight: "2rem" }}
             />
             <img
               role="button"
               tabIndex={0}
               aria-label="Send prompt"
-              className="absolute right-2 bottom-6 w-8 h-8 mb-6 cursor-pointer bg-transparent"
+              className="absolute right-3 bottom-2 w-7 h-7 sm:w-8 sm:h-8 cursor-pointer"
               src={send}
               alt="send icon"
               onClick={sendPrompt}
-              onKeyDown={(e) => {
-                if ((e.key === "Enter" || e.key === " ") && !loading) sendPrompt();
-              }}
-              style={{ opacity: loading ? 0.5 : 1, pointerEvents: loading ? "none" : "auto" }}
+              style={{ opacity: loading ? 0.5 : 1 }}
             />
           </div>
         </div>
 
-        <p className="text-xs text-gray-500 mt-2 mb-4 text-left italic">
+        <p className="text-xs text-gray-200 mt-2 mb-4 text-center italic px-3">
           *TutorGPT can make mistakes. Please verify important information.
         </p>
       </div>
