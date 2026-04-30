@@ -23,7 +23,21 @@ function App() {
     const urlParams = new URLSearchParams(window.location.search);
     const question = urlParams.get("question");
     const image = urlParams.get("image");
-    updatePrompt(question || "");
+    const optionsRaw = urlParams.get("options");
+
+    let fullPrompt = question || "";
+    if (optionsRaw) {
+      try {
+        const options = JSON.parse(optionsRaw);
+        if (Array.isArray(options) && options.length > 0) {
+          const labels = ["A", "B", "C", "D", "E", "F"];
+          const formatted = options.map((opt, i) => `${labels[i] ?? i + 1}) ${opt}`).join("\n");
+          fullPrompt = `${fullPrompt}\n\nOptions:\n${formatted}`;
+        }
+      } catch {}
+    }
+
+    updatePrompt(fullPrompt);
     if (image) {
       setImageUrl(image);
       setImagePreview(image);
