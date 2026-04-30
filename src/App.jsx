@@ -15,13 +15,19 @@ function App() {
   const [conversation, setConversation] = useState([]);
   const [error, setError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = React.useRef(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const question = urlParams.get("question");
+    const image = urlParams.get("image");
     updatePrompt(question || "");
+    if (image) {
+      setImageUrl(image);
+      setImagePreview(image);
+    }
   }, []);
 
   useEffect(() => {
@@ -70,7 +76,8 @@ function App() {
 
   const clearImage = () => {
     setImageFile(null);
-    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImageUrl(null);
+    if (imageFile && imagePreview) URL.revokeObjectURL(imagePreview);
     setImagePreview(null);
   };
 
@@ -93,11 +100,14 @@ function App() {
       }
 
       let userContent;
-      if (imageFile) {
-        const dataUrl = await toBase64(imageFile);
+      const attachedImageUrl = imageFile
+        ? await toBase64(imageFile)
+        : imageUrl || null;
+
+      if (attachedImageUrl) {
         userContent = [
           { type: "text", text: trimmed },
-          { type: "image_url", image_url: { url: dataUrl } },
+          { type: "image_url", image_url: { url: attachedImageUrl } },
         ];
       } else {
         userContent = trimmed;
