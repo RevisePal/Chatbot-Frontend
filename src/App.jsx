@@ -5,7 +5,7 @@ import robot from "./assets/robot.png";
 import student from "./assets/student.jpg";
 import loadingGif from "./assets/loading.gif";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCopy, faCheck, faImage, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 
 function App() {
@@ -14,6 +14,9 @@ function App() {
   const [copied, setCopied] = useState(null);
   const [conversation, setConversation] = useState([]);
   const [error, setError] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const fileInputRef = React.useRef(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -49,6 +52,28 @@ function App() {
     return doc.body.textContent || "";
   };
 
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+    e.target.value = "";
+  };
+
+  const clearImage = () => {
+    setImageFile(null);
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImagePreview(null);
+  };
+
   const sendPrompt = async () => {
     const trimmed = (prompt ?? "").trim();
     if (loading || trimmed.length === 0) return;
@@ -63,10 +88,21 @@ function App() {
     try {
       const messages = [];
       for (const turn of conversation ?? []) {
-        if (turn?.prompt) messages.push({ role: "user", content: String(turn.prompt) });
+        if (turn?.prompt) messages.push({ role: "user", content: turn.prompt });
         if (turn?.response) messages.push({ role: "assistant", content: String(turn.response) });
       }
-      messages.push({ role: "user", content: trimmed });
+
+      let userContent;
+      if (imageFile) {
+        const dataUrl = await toBase64(imageFile);
+        userContent = [
+          { type: "text", text: trimmed },
+          { type: "image_url", image_url: { url: dataUrl } },
+        ];
+      } else {
+        userContent = trimmed;
+      }
+      messages.push({ role: "user", content: userContent });
 
       const res = await fetch(`${import.meta.env.VITE_API_URL}/ask`, {
         method: "POST",
@@ -99,8 +135,9 @@ function App() {
       const message = payload?.message ?? "";
       if (!message) throw new Error("Empty response from server");
 
-      setConversation((prev) => [...(prev || []), { prompt: trimmed, response: message }]);
+      setConversation((prev) => [...(prev || []), { prompt: trimmed, image: imagePreview, response: message }]);
       updatePrompt("");
+      clearImage();
       return message;
     } catch (err) {
       console.error(err);
@@ -111,6 +148,15 @@ function App() {
     }
   };
 
+  const textareaRef = React.useRef(null);
+
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }, [prompt]);
+
   return (
     <MathJaxContext>
       <div className="flex flex-col items-center justify-start w-full min-h-screen bg-gradient-to-b from-blue-700 to-blue-400 pt-6 sm:pt-10 overflow-hidden">
@@ -118,7 +164,7 @@ function App() {
           Welcome to TutorGPT
         </h1>
         <h2 className="text-white text-sm sm:text-base font-light font-sans mb-4">
-          Powered by GPT-5.5
+          Powered by GPT-4o mini
         </h2>
 
         <div className="flex-grow w-11/12 sm:w-9/12 flex flex-col items-center justify-end pb-28 sm:pb-24">
@@ -140,7 +186,16 @@ function App() {
                         src={student}
                         alt="user avatar"
                       />
-                      <div className="break-words">{stripHtmlTags(item.prompt)}</div>
+                      <div className="break-words">
+                        {stripHtmlTags(item.prompt)}
+                        {item.image && (
+                          <img
+                            src={item.image}
+                            alt="attached"
+                            className="mt-2 max-h-48 rounded-lg object-contain"
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -197,9 +252,44 @@ function App() {
 
         {/* Input area */}
         <div className="fixed bottom-0 left-0 right-0 p-3 bg-blue-700/40 backdrop-blur-md">
-          <div className="relative flex items-center">
+          {/* Image preview */}
+          {imagePreview && (
+            <div className="relative inline-block mb-2 ml-1">
+              <img
+                src={imagePreview}
+                alt="preview"
+                className="h-16 rounded-lg object-cover border-2 border-white"
+              />
+              <button
+                onClick={clearImage}
+                className="absolute -top-2 -right-2 bg-gray-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                aria-label="Remove image"
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </button>
+            </div>
+          )}
+          <div className="relative flex items-center gap-2">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageSelect}
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={loading}
+              aria-label="Attach image"
+              className="text-white opacity-80 hover:opacity-100 flex-shrink-0"
+            >
+              <FontAwesomeIcon icon={faImage} size="lg" />
+            </button>
             <textarea
-              className="flex-grow rounded-lg pl-3 pr-12 py-2 focus:outline-none text-sm sm:text-base w-full resize-none bg-white"
+              ref={textareaRef}
+              rows={1}
+              className="flex-grow rounded-lg pl-3 pr-12 py-2 focus:outline-none text-sm sm:text-base w-full resize-none bg-white overflow-y-auto"
+              style={{ maxHeight: "10rem" }}
               placeholder="Ask TutorGPT..."
               disabled={loading}
               value={stripHtmlTags(prompt)}
