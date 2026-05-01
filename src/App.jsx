@@ -50,7 +50,6 @@ function App() {
     updatePrompt(fullPrompt);
     if (image) {
       setImageUrl(image);
-      setImagePreview(image);
     }
   }, []);
 
@@ -171,7 +170,7 @@ function App() {
       const message = payload?.message ?? "";
       if (!message) throw new Error("Empty response from server");
 
-      setConversation((prev) => [...(prev || []), { prompt: trimmed, image: imagePreview, response: message }]);
+      setConversation((prev) => [...(prev || []), { prompt: trimmed, image: attachedImageUrl, response: message }]);
       updatePrompt("");
       clearImage();
       return message;
