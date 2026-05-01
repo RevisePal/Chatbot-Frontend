@@ -25,18 +25,28 @@ function App() {
     const image = urlParams.get("image");
     const optionsRaw = urlParams.get("options");
 
+    console.log("[TutorGPT] URL params:", { question, image, optionsRaw });
+
     let fullPrompt = question || "";
     if (optionsRaw) {
       try {
         const options = JSON.parse(optionsRaw);
+        console.log("[TutorGPT] Parsed options:", options);
         if (Array.isArray(options) && options.length > 0) {
           const labels = ["A", "B", "C", "D", "E", "F"];
           const formatted = options.map((opt, i) => `${labels[i] ?? i + 1}) ${opt}`).join("\n");
           fullPrompt = `${fullPrompt}\n\nOptions:\n${formatted}`;
+        } else {
+          console.warn("[TutorGPT] Options parsed but empty or not an array:", options);
         }
-      } catch {}
+      } catch (e) {
+        console.error("[TutorGPT] Failed to parse options JSON:", e, "Raw value:", optionsRaw);
+      }
+    } else {
+      console.log("[TutorGPT] No options param in URL.");
     }
 
+    console.log("[TutorGPT] Final prompt set to:", fullPrompt);
     updatePrompt(fullPrompt);
     if (image) {
       setImageUrl(image);
@@ -97,6 +107,7 @@ function App() {
 
   const sendPrompt = async () => {
     const trimmed = (prompt ?? "").trim();
+    console.log("[TutorGPT] sendPrompt called. Prompt:", trimmed);
     if (loading || trimmed.length === 0) return;
 
     setLoading(true);
@@ -127,6 +138,7 @@ function App() {
         userContent = trimmed;
       }
       messages.push({ role: "user", content: userContent });
+      console.log("[TutorGPT] Sending to /ask:", JSON.stringify(messages, null, 2));
 
       const res = await fetch(`${import.meta.env.VITE_API_URL}/ask`, {
         method: "POST",
