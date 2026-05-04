@@ -18,12 +18,15 @@ function App() {
   const [imageUrl, setImageUrl] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = React.useRef(null);
+  const authTokenRef = React.useRef(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const question = urlParams.get("question");
     const image = urlParams.get("image");
     const optionsRaw = urlParams.get("options");
+    const token = urlParams.get("token");
+    if (token) authTokenRef.current = token;
 
     console.log("[TutorGPT] URL params:", { question, image, optionsRaw });
 
@@ -139,9 +142,12 @@ function App() {
       messages.push({ role: "user", content: userContent });
       console.log("[TutorGPT] Sending to /ask:", JSON.stringify(messages, null, 2));
 
+      const headers = { "Content-Type": "application/json" };
+      if (authTokenRef.current) headers["Authorization"] = `Bearer ${authTokenRef.current}`;
+
       const res = await fetch(`${import.meta.env.VITE_API_URL}/ask`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({ conversations: messages }),
         signal: controller.signal,
         mode: "cors",
