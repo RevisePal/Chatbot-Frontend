@@ -6,7 +6,10 @@ import student from "./assets/student.jpg";
 import loadingGif from "./assets/loading.gif";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faCheck, faImage, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { MathJax, MathJaxContext } from "better-react-mathjax";
+import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 
 function App() {
   const [prompt, updatePrompt] = useState("");
@@ -68,16 +71,6 @@ function App() {
     setTimeout(() => setCopied(null), 1000);
   };
 
-  const cleanResponse = (text) =>
-    (text || "")
-      .replace(/^### /gm, "")
-      .replace(/\*\*\*(.*?)\*\*\*/gm, "$1")
-      .replace(/\*\*(.*?)\*\*\*/gm, "$1")
-      .replace(/\*(.*?)\*/gm, "$1")
-      .replace(/`(.*?)`/gm, "$1")
-      .replace(/^- /gm, "\n• ")
-      .replace(/\n{3,}/g, "\n\n")
-      .trim();
 
   const stripHtmlTags = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
@@ -199,7 +192,7 @@ function App() {
   }, [prompt]);
 
   return (
-    <MathJaxContext>
+    <>
       <div className="flex flex-col items-center justify-start w-full min-h-screen bg-gradient-to-b from-blue-700 to-blue-400 pt-6 sm:pt-10 overflow-hidden">
         <h1 className="text-white text-2xl sm:text-4xl font-sans text-center px-4">
           Welcome to TutorGPT
@@ -247,10 +240,13 @@ function App() {
                         src={robot}
                         alt="bot avatar"
                       />
-                      <div className="mathjax-wrapper break-words">
-                        <MathJax className="mathjax-content">
-                          {cleanResponse(item.response)}
-                        </MathJax>
+                      <div className="prose prose-sm max-w-none break-words">
+                        <ReactMarkdown
+                          remarkPlugins={[remarkMath]}
+                          rehypePlugins={[rehypeKatex]}
+                        >
+                          {item.response}
+                        </ReactMarkdown>
                       </div>
                     </div>
                     {item.response && (
@@ -359,7 +355,7 @@ function App() {
           *TutorGPT can make mistakes. Please verify important information.
         </p>
       </div>
-    </MathJaxContext>
+    </>
   );
 }
 
