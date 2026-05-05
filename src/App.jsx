@@ -72,6 +72,11 @@ function App() {
   };
 
 
+  const preprocessMath = (text) =>
+    (text || "")
+      .replace(/\\\(([\s\S]*?)\\\)/g, (_, math) => `$${math}$`)
+      .replace(/\\\[([\s\S]*?)\\\]/g, (_, math) => `$$${math}$$`);
+
   const stripHtmlTags = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent || "";
@@ -245,7 +250,7 @@ function App() {
                           remarkPlugins={[remarkMath]}
                           rehypePlugins={[rehypeKatex]}
                         >
-                          {item.response}
+                          {preprocessMath(item.response)}
                         </ReactMarkdown>
                       </div>
                     </div>
