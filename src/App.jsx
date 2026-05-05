@@ -330,7 +330,7 @@ function App() {
             <textarea
               ref={textareaRef}
               rows={1}
-              className="flex-grow rounded-lg pl-3 pr-12 py-2 focus:outline-none text-sm sm:text-base w-full resize-none bg-white overflow-y-auto"
+              className="flex-grow rounded-lg pl-3 pr-12 py-2 focus:outline-none text-base w-full resize-none bg-white overflow-y-auto"
               style={{ maxHeight: "10rem" }}
               placeholder="Ask TutorGPT..."
               disabled={loading}
