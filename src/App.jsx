@@ -22,6 +22,7 @@ function App() {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = React.useRef(null);
   const authTokenRef = React.useRef(null);
+  const [showUpdatePrompt, setShowUpdatePrompt] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -29,7 +30,11 @@ function App() {
     const image = urlParams.get("image");
     const optionsRaw = urlParams.get("options");
     const token = urlParams.get("token");
-    if (token) authTokenRef.current = token;
+    if (token) {
+      authTokenRef.current = token;
+    } else {
+      setShowUpdatePrompt(true);
+    }
 
     console.log("[TutorGPT] URL params:", { question, image, optionsRaw });
 
@@ -198,6 +203,39 @@ function App() {
 
   return (
     <>
+      {showUpdatePrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-6">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 flex flex-col items-center text-center">
+            <div className="text-4xl mb-3">🔄</div>
+            <h2 className="text-lg font-bold text-gray-900 mb-2">Update Required</h2>
+            <p className="text-sm text-gray-600 mb-5">
+              Please update the RevisePal app to the latest version to continue using TutorGPT securely.
+            </p>
+            <a
+              href="https://apps.apple.com/gb/app/gcse-revision-revisepal/id1552378023"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full mb-3 bg-black text-white text-sm font-semibold py-3 rounded-xl text-center block"
+            >
+              Update on the App Store
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.revisepal.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full mb-4 bg-green-600 text-white text-sm font-semibold py-3 rounded-xl text-center block"
+            >
+              Update on Google Play
+            </a>
+            <button
+              onClick={() => setShowUpdatePrompt(false)}
+              className="text-xs text-gray-400 underline"
+            >
+              Continue without updating
+            </button>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col items-center justify-start w-full min-h-screen bg-gradient-to-b from-blue-700 to-blue-400 pt-6 sm:pt-10 overflow-hidden">
         <h1 className="text-white text-2xl sm:text-4xl font-sans text-center px-4">
           Welcome to TutorGPT
