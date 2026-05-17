@@ -232,12 +232,6 @@ function App() {
             >
               Update on Google Play
             </a>
-            <button
-              onClick={() => setShowUpdatePrompt(false)}
-              className="text-xs text-gray-400 underline"
-            >
-              Continue without updating
-            </button>
           </div>
         </div>
       )}
