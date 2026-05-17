@@ -158,6 +158,11 @@ function App() {
 
       const raw = await res.text();
 
+      if (res.status === 401) {
+        setShowUpdatePrompt(true);
+        return;
+      }
+
       if (!res.ok) {
         let serverMsg = res.statusText;
         try {
