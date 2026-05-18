@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Friend on RevisePal</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #1d4ed8, #60a5fa);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: white; border-radius: 20px; padding: 32px 24px;
+      max-width: 360px; width: 100%; text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: #dbeafe; display: flex; align-items: center;
+      justify-content: center; margin: 0 auto 16px; font-size: 32px;
+    }
+    h1 { font-size: 20px; color: #111; margin-bottom: 8px; }
+    p { font-size: 14px; color: #666; margin-bottom: 28px; line-height: 1.5; }
+    .btn {
+      display: block; width: 100%; padding: 14px;
+      border-radius: 12px; font-size: 15px; font-weight: 600;
+      text-decoration: none; margin-bottom: 12px; border: none; cursor: pointer;
+    }
+    .btn-ios { background: #000; color: #fff; }
+    .btn-android { background: #16a34a; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="avatar">👋</div>
+    <h1 id="title">Someone wants to be your friend on RevisePal!</h1>
+    <p>Download the app to accept the friend request and start competing together.</p>
+    <a class="btn btn-ios" href="https://apps.apple.com/gb/app/gcse-revision-revisepal/id1552378023">
+      Download on the App Store
+    </a>
+    <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.revisepal.app">
+      Get it on Google Play
+    </a>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    if (name) {
+      document.getElementById('title').textContent =
+        name + ' wants to be your friend on RevisePal!';
+    }
+  </script>
+</body>
+</html>

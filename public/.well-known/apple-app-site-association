@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["299753Y9WJ.org.revisepal.revisepal"],
+        "components": [
+          { "/": "/add/*" }
+        ]
+      }
+    ]
+  }
+}

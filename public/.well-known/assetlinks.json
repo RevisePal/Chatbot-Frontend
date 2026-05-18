@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.revisepal.app",
+      "sha256_cert_fingerprints": [
+        "E2:20:7C:D0:99:50:63:1A:AD:69:AF:A0:23:30:2A:D0:8F:20:BA:3C:A0:80:86:29:B7:71:C1:00:29:37:ED:E5"
+      ]
+    }
+  }
+]
