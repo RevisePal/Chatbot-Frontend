@@ -43,10 +43,12 @@
     <p id="subtitle">Opening RevisePal…</p>
 
     <div id="store-buttons">
-      <a class="btn btn-ios" id="ios-btn" href="https://apps.apple.com/gb/app/gcse-revision-revisepal/id1552378023">
+      <a class="btn btn-ios" id="ios-btn" href="https://apps.apple.com/gb/app/gcse-revision-revisepal/id1552378023"
+         onclick="copyAndRedirect(event, this.href)">
         Download on the App Store
       </a>
-      <a class="btn btn-android" id="android-btn" href="https://play.google.com/store/apps/details?id=com.revisepal.app">
+      <a class="btn btn-android" id="android-btn" href="https://play.google.com/store/apps/details?id=com.revisepal.app"
+         onclick="copyAndRedirect(event, this.href)">
         Get it on Google Play
       </a>
     </div>
@@ -88,6 +90,15 @@
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) clearTimeout(fallbackTimer);
     });
+
+    // Copy deep link to clipboard before redirecting to store
+    // so the app can read it on first launch (deferred deep linking)
+    function copyAndRedirect(e, storeUrl) {
+      e.preventDefault();
+      navigator.clipboard.writeText(appUrl).finally(() => {
+        window.location.href = storeUrl;
+      });
+    }
   </script>
 </body>
 </html>
