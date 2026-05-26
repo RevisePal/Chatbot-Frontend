@@ -32,27 +32,62 @@
     }
     .btn-ios { background: #000; color: #fff; }
     .btn-android { background: #16a34a; color: #fff; }
+    .btn-open { background: #1d4ed8; color: #fff; }
+    #store-buttons { display: none; }
   </style>
 </head>
 <body>
   <div class="card">
     <div class="avatar">👋</div>
     <h1 id="title">Someone wants to be your friend on RevisePal!</h1>
-    <p>Download the app to accept the friend request and start competing together.</p>
-    <a class="btn btn-ios" href="https://apps.apple.com/gb/app/gcse-revision-revisepal/id1552378023">
-      Download on the App Store
-    </a>
-    <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.revisepal.app">
-      Get it on Google Play
-    </a>
+    <p id="subtitle">Opening RevisePal…</p>
+
+    <div id="store-buttons">
+      <a class="btn btn-ios" id="ios-btn" href="https://apps.apple.com/gb/app/gcse-revision-revisepal/id1552378023">
+        Download on the App Store
+      </a>
+      <a class="btn btn-android" id="android-btn" href="https://play.google.com/store/apps/details?id=com.revisepal.app">
+        Get it on Google Play
+      </a>
+    </div>
   </div>
+
   <script>
     const params = new URLSearchParams(window.location.search);
     const name = params.get('name');
+    const uid = params.get('uid');
+
     if (name) {
       document.getElementById('title').textContent =
         name + ' wants to be your friend on RevisePal!';
     }
+
+    const isIos = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isAndroid = /Android/i.test(navigator.userAgent);
+
+    // Hide the irrelevant store button
+    if (isIos) document.getElementById('android-btn').style.display = 'none';
+    if (isAndroid) document.getElementById('ios-btn').style.display = 'none';
+
+    const appUrl = 'revisepal://add?' +
+      (uid ? 'uid=' + encodeURIComponent(uid) : '') +
+      (uid && name ? '&' : '') +
+      (name ? 'name=' + encodeURIComponent(name) : '');
+
+    // Try opening the app via custom scheme
+    window.location.href = appUrl;
+
+    // If the app isn't installed the page stays visible — show store buttons after timeout
+    const fallbackTimer = setTimeout(() => {
+      document.getElementById('subtitle').textContent =
+        'Download RevisePal to accept the friend request and start competing together.';
+      document.getElementById('store-buttons').style.display = 'block';
+    }, 1500);
+
+    // If the app opens, the page goes to background — cancel the fallback
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearTimeout(fallbackTimer);
+    });
   </script>
 </body>
 </html>
